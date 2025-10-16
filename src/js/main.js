@@ -32,7 +32,7 @@ require.config({
 		'kazoo': 'js/lib/kazoo/kazoo',
 		'kazoosdk': 'js/lib/jquery.kazoosdk',
 		'libphonenumber': 'js/vendor/libphonenumber-js.min',
-		'lodash': 'js/vendor/lodash-4.17.4',
+		'lodash': 'js/vendor/lodash-4.17.21',
 		'marked': 'js/vendor/marked.min',
 		'mask': 'js/vendor/jquery.mask',
 		'md5': 'js/vendor/md5',
