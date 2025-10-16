@@ -718,7 +718,7 @@
 			var parsedError = error;
 
 			if ('responseText' in error && error.responseText && error.getResponseHeader('content-type') === 'application/json') {
-				parsedError = $.parseJSON(error.responseText);
+				parsedError = JSON.parse(error.responseText);
 				parsedError.httpErrorStatus = error.status;
 			}
 
