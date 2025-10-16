@@ -1,5 +1,6 @@
 define(function(require) {
 	var $ = require('jquery'),
+		jQueryMigrate = require('jquery-migrate'),
 		_ = require('lodash'),
 		async = require('async'),
 		card = require('card'),

@@ -25,7 +25,8 @@ require.config({
 		'image-select': 'js/vendor/ImageSelect.jquery',
 		'introJs': 'js/vendor/intro.min',
 		'isotope': 'js/vendor/jquery.isotope.min',
-		'jquery': 'js/vendor/jquery-1.9.1.min',
+		'jquery': 'js/vendor/jquery-3.7.1',
+		'jquery-migrate': 'js/vendor/jquery-migrate-3.5.2',
 		'jqueryui': 'js/vendor/jquery-ui-1.10.3.custom.min',
 		'jsoneditor': 'js/vendor/jsoneditor/jsoneditor-8.6.8.min',
 		'jstz': 'js/vendor/jstz.min',
@@ -88,6 +89,7 @@ require.config({
 		},
 		'hasher': ['signals'],
 		'image-select': ['chosen'],
+		'jquery-migrate': ['jquery'],
 		'jqueryui': ['jquery'],
 		'jstz': {
 			exports: 'jstz'
