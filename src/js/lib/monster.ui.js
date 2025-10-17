@@ -668,7 +668,7 @@ define(function(require) {
 				dialog.dialog('close');
 			});
 
-			dialog.find('.btn.alert_button').click(function() {
+			dialog.find('.btn.alert_button').on('click', function() {
 				dialog.dialog('close');
 			});
 
@@ -676,7 +676,7 @@ define(function(require) {
 
 			dialog.find('.json')
 				.css('min-width', 0)
-				.click(function(event) {
+				.on('click', function(event) {
 					event.preventDefault();
 					dialog.find('.json_error').toggle();
 				});
@@ -916,7 +916,7 @@ define(function(require) {
 			$dialogBody.dialog('option', 'position', dialogPosition);
 
 			// Set event handlers
-			$('input', content).keypress(function(e) {
+			$('input', content).on('keypress', function(e) {
 				if (e.keyCode === 13) {
 					e.preventDefault();
 					return false;
@@ -1874,7 +1874,7 @@ define(function(require) {
 					})
 					.keydown('esc', function() {
 						this.value = '';
-						$(this).change();
+						$(this).trigger('change');
 					});
 			} else {
 				wysiwygTemplate = $(monster.template(coreApp, 'wysiwyg-template', dataTemplate));
@@ -3116,7 +3116,7 @@ define(function(require) {
 
 			template.find('.dialbox').on('keydown', function(e) {
 				if (e.keyCode === 13) {
-					template.find('.dialpad-action-button').click();
+					template.find('.dialpad-action-button').trigger('click');
 				}
 			});
 
