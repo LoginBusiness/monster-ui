@@ -1348,12 +1348,12 @@ define(function(require) {
 
 			// Adding advanced custom rules
 			$.validator.addMethod('greaterDate', function(value, element, param) {
-				var target = _.isString(param) ? $(param) : param;
-				if (this.settings.onfocusout) {
-					target.unbind('.validate-greaterDate').bind('blur.validate-greaterDate', function() {
-						$(element).valid();
-					});
-				}
+			var target = _.isString(param) ? $(param) : param;
+			if (this.settings.onfocusout) {
+				target.off('.validate-greaterDate').on('blur.validate-greaterDate', function() {
+					$(element).valid();
+				});
+			}
 
 				return parseInt(monster.util.timeToSeconds(value)) > parseInt(monster.util.timeToSeconds(target.val()));
 			}, localization.customRules.greaterDate);
