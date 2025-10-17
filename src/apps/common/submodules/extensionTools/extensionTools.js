@@ -77,13 +77,13 @@ define(function(require) {
 					'extension': {
 						checkList: listValidationExtensions
 					}
-				}
-			});
+			}
+		});
 
-			template.find('#extension_number').keyup(function(event) {
-				if (event.keyCode === 13) {
-					template.find('#proceed_select_extension').click();
-				}
+		template.find('#extension_number').on('keyup', function(event) {
+			if (event.keyCode === 13) {
+				template.find('#proceed_select_extension').click();
+			}
 			});
 
 			template.find('#proceed_select_extension').on('click', function(e) {
