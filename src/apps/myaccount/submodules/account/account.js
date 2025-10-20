@@ -131,7 +131,7 @@ define(function(require) {
 		//saving the access list settings
 		template.find('li[data-name="accountsmanager_access_list"] .saveList').on('click', function() {
 			var order = $('#account_deny_allow_order').val(),
-				accessListText = $.trim($('#access-list-input').val()).split('\n');
+				accessListText = ($('#access-list-input').val() || '').trim().split('\n');
 
 				//is this a valid list of cidrs?
 				var isValidCidrList = self.validateCidrList(accessListText);
