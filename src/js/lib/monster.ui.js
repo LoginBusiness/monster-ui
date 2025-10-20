@@ -2520,7 +2520,7 @@ define(function(require) {
 				menus = thisArg.appFlags._layout.menus,
 				navbarTemplate = monster.template(monster.apps.core, 'monster-app-navbar', { menus: menus }),
 				subnavTemplate = monster.template(monster.apps.core, 'monster-app-subnav', { menus: menus }),
-				hasSubnav = $.trim($(subnavTemplate).find('.app-subnav-wrapper').html()),
+				hasSubnav = ($(subnavTemplate).find('.app-subnav-wrapper').html() || '').trim(),
 				initNavbar = function initNavbar() {
 					appHeader
 						.find('.app-navbar')
