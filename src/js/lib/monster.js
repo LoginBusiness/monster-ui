@@ -47,6 +47,7 @@ define(function(require) {
 		'whitelabel.hideAppStore': [_.isBoolean, false],
 		'whitelabel.hideBuyNumbers': [_.isBoolean, false],
 		'whitelabel.hideNewAccountCreation': [_.isBoolean, false],
+		'whitelabel.includes': [isArrayOfHttpUrls, []],
 		'whitelabel.language': [_.isString, defaultLanguage, supportedLanguages],
 		'whitelabel.logoutTimer': [_.isNumber, 15],
 		'whitelabel.preventDIDFormatting': [_.isBoolean, false],
@@ -830,6 +831,30 @@ define(function(require) {
 	// See example in Cluster Manager
 	window.monster = monster;
 	window.Handlebars = handlebars;
+
+	function isArrayOfHttpUrls(input) {
+		var isHttpUrl = function(string) {
+
+			// Allow paths starting with / 
+			if (_.isString(string) && string.charAt(0) === '/') {
+				return true;
+			}
+
+			var url;
+			try {
+				url = new URL(string);
+			} catch (error) {
+				return false;
+			}
+			return /^(?:http)s?:/.test(url.protocol);
+		};
+
+		return _
+			.chain([input])
+			.flatten()
+			.every(isHttpUrl)
+			.value();
+	}
 
 	return monster;
 });
