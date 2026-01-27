@@ -163,7 +163,7 @@ define(function(require) {
 
 			var interval = setInterval(function() {
 				/* As long as the page is displayed */
-				if ($('.view-conference-wrapper').size() > 0 && target.is(':visible')) {
+				if ($('.view-conference-wrapper').length > 0 && target.is(':visible')) {
 					target.html(monster.util.friendlyTimer(duration++));
 				} else {
 					clearInterval(interval);
