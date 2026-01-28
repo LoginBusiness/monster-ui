@@ -31,6 +31,7 @@ define(function(require) {
 	var defaultConfig = {
 		'api.default': [_.isString, window.location.protocol + '//' + window.location.hostname + ':8000/v2/'],
 		currencyCode: [isCurrencyCode, defaultCurrencyCode],
+		allowCrossSiteUsage: [_.isBoolean, false],
 		'developerFlags.showAllCallflows': [_.isBoolean, false],
 		'developerFlags.showJsErrors': [_.isBoolean, false],
 		'port.loa': [_.isString, 'http://ui.zswitch.net/Editable.LOA.Form.pdf'],
@@ -48,6 +49,7 @@ define(function(require) {
 		'whitelabel.hideAppStore': [_.isBoolean, false],
 		'whitelabel.hideBuyNumbers': [_.isBoolean, false],
 		'whitelabel.hideNewAccountCreation': [_.isBoolean, false],
+		'whitelabel.includes': [isArrayOfHttpUrls, []],
 		'whitelabel.language': [_.isString, defaultLanguage, supportedLanguages],
 		'whitelabel.logoutTimer': [_.isNumber, 15],
 		'whitelabel.preventDIDFormatting': [_.isBoolean, false],
@@ -246,27 +248,7 @@ define(function(require) {
 			error: []
 		},
 
-		cookies: {
-			set: function set(key, value, options) {
-				Cookies.set(key, value, options);
-			},
-
-			get: function get(key) {
-				return this.has(key) ? Cookies.get(key) : null;
-			},
-
-			getJson: function getJson(key) {
-				return this.has(key) ? Cookies.getJSON(key) : null;
-			},
-
-			remove: function remove(key) {
-				Cookies.remove(key);
-			},
-
-			has: function has(key) {
-				return Cookies.get(key) === undefined ? false : true;
-			}
-		},
+		cookies: getCookiesManager(),
 
 		css: function(href) {
 			$('<link/>', { rel: 'stylesheet', href: monster.util.cacheUrl(href) }).appendTo('head');
@@ -581,6 +563,56 @@ define(function(require) {
 	};
 
 	/**
+	 * Returns wrapper over cookie management library.
+	 * @private
+	 * @returns {Object} Cookies manager module.
+	 */
+	function getCookiesManager() {
+		var mergeAttributes = function(attributes) {
+			var allowCrossSiteUsage = monster.config.allowCrossSiteUsage;
+			var crossSiteAttributes = {
+				samesite: 'none',
+				secure: true
+			};
+			return _.merge(
+				{},
+				attributes,
+				allowCrossSiteUsage && crossSiteAttributes
+			);
+		};
+
+		return {
+			set: function set(key, value, attributes) {
+				var result;
+				try {
+					result = JSON.stringify(value);
+				} catch (e) {
+					return;
+				}
+				Cookies.set(key, result, mergeAttributes(attributes));
+			},
+			get: _.flow(
+				Cookies.get,
+				_.partial(_.defaultTo, _, null)
+			),
+			getJson: function getJson(key) {
+				if (!this.has(key)) {
+					return null;
+				}
+				var value = Cookies.get(key);
+				try {
+					return JSON.parse(value);
+				} catch (e) {}
+			},
+			remove: Cookies.remove,
+			has: _.flow(
+				Cookies.get,
+				_.negate(_.isUndefined)
+			)
+		};
+	}
+
+	/**
 	 * @param  {String} id Resource identifier
 	 * @param  {Object} request Request settings
 	 * @param  {String} request.url
@@ -831,6 +863,39 @@ define(function(require) {
 	// See example in Cluster Manager
 	window.monster = monster;
 	window.Handlebars = handlebars;
+
+	/**
+	 * Validates that the given input is (or contains) only valid HTTP/HTTPS URLs
+	 * or root-relative paths.
+	 *
+	 * The input may be a single value or an array of values. Each value is
+	 * considered valid if it is either:
+	 *  - a root-relative path starting with "/" (e.g. "/js/app.js"), or
+	 *  - a fully-qualified URL using the "http" or "https" protocol.
+	 */
+	function isArrayOfHttpUrls(input) {
+		var isHttpUrl = function(string) {
+
+			// Allow paths starting with / 
+			if (_.isString(string) && string.charAt(0) === '/') {
+				return true;
+			}
+
+			var url;
+			try {
+				url = new URL(string);
+			} catch (error) {
+				return false;
+			}
+			return /^(?:http)s?:/.test(url.protocol);
+		};
+
+		return _
+			.chain([input])
+			.flatten()
+			.every(isHttpUrl)
+			.value();
+	}
 
 	return monster;
 });
