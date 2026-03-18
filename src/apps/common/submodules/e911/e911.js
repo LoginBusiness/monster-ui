@@ -60,13 +60,13 @@ define(function(require) {
 					notification_contact_emails: {
 						regex: self.i18n.active().e911.email.error
 					}
-			}
-		});
+				}
+			});
 
-		popupHtml.find('#postal_code').on('change', function() {
-			var zipCode = $(this).val();
+			popupHtml.find('#postal_code').change(function() {
+				var zipCode = $(this).val();
 
-			if (zipCode) {
+				if (zipCode) {
 					self.e911GetAddressFromZipCode({
 						data: {
 							zipCode: zipCode
@@ -81,12 +81,12 @@ define(function(require) {
 							}
 						}
 					});
-			}
-		});
+				}
+			});
 
-		popupHtml.find('.inline_field > input').on('keydown', function() {
-			popup.find('.gmap_link_div').hide();
-		});
+			popupHtml.find('.inline_field > input').keydown(function() {
+				popup.find('.gmap_link_div').hide();
+			});
 
 			popupHtml.find('#submit_btn').on('click', function(ev) {
 				ev.preventDefault();

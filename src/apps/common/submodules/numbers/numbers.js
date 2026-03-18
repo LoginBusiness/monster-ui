@@ -179,7 +179,7 @@ define(function(require) {
 				listType = dataNumbers.viewType && dataNumbers.viewType === 'manager' ? 'full' : 'partial',
 				listSearchedAccounts = [ self.accountId ],
 				showLinks = function() {
-					var methodToUse = parent.find('.number-box.selected').length > 0 ? 'addClass' : 'removeClass';
+					var methodToUse = parent.find('.number-box.selected').size() > 0 ? 'addClass' : 'removeClass';
 					parent.find('#trigger_links')[methodToUse]('active');
 				},
 				displayNumberList = function(accountId, callback, forceRefresh) {
@@ -425,7 +425,7 @@ define(function(require) {
 					}
 
 					/* Check account checkbox if all the numbers are checked */
-					if (section.find('.numbers-wrapper input[type="checkbox"]:checked').length === section.find('.numbers-wrapper input[type="checkbox"]').length) {
+					if (section.find('.numbers-wrapper input[type="checkbox"]:checked').size() === section.find('.numbers-wrapper input[type="checkbox"]').size()) {
 						accountCheckbox.prop('checked', true);
 					} else {
 						accountCheckbox.prop('checked', false);
@@ -738,7 +738,7 @@ define(function(require) {
 								var section = viewList.find('[data-id="' + data.account_id + '"]'),
 									numberBox = section.find('[data-phonenumber="' + data.number + '"]');
 
-								if (numberBox.length > 0) {
+								if (numberBox.size() > 0) {
 									section.addClass('open');
 									monster.ui.highlight(numberBox, {
 										timer: 5000

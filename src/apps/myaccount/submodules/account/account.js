@@ -126,12 +126,12 @@ define(function(require) {
 
 			template.find('[name="ui_flags.numbers_format"]').on('change', function() {
 				template.find('.group-for-exceptions').toggleClass('active', template.find('[name="ui_flags.numbers_format"]:checked').val() === 'international_with_exceptions');
-		});
+			});
 
-		//saving the access list settings
-		template.find('li[data-name="accountsmanager_access_list"] .saveList').on('click', function() {
-			var order = $('#account_deny_allow_order').val(),
-				accessListText = ($('#access-list-input').val() || '').trim().split('\n');
+			//saving the access list settings
+			template.find('li[data-name="accountsmanager_access_list"] .saveList').click(function() {
+				var order = $('#account_deny_allow_order').val(),
+					accessListText = $.trim($('#access-list-input').val()).split('\n');
 
 				//is this a valid list of cidrs?
 				var isValidCidrList = self.validateCidrList(accessListText);

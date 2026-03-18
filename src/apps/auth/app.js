@@ -237,7 +237,7 @@ define(function(require) {
 		updateTokenFromMonsterCookie: function() {
 			var self = this,
 				cookieMonster = monster.cookies.get('monster-auth'),
-				tokenCookie = cookieMonster ? JSON.parse(cookieMonster).authToken : undefined;
+				tokenCookie = cookieMonster ? $.parseJSON(cookieMonster).authToken : undefined;
 
 			self.setKazooAPIToken(tokenCookie);
 		},

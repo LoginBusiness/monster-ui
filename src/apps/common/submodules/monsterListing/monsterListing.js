@@ -124,7 +124,7 @@ define(function(require) {
 					currentRow.data('search').toLowerCase().indexOf(currentSearch) < 0 ? currentRow.hide() : currentRow.show();
 				});
 
-				if (rows.length > 0) {
+				if (rows.size() > 0) {
 					rows.is(':visible') ? emptySearch.hide() : emptySearch.show();
 				}
 			});
