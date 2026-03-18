@@ -668,7 +668,7 @@ define(function(require) {
 				dialog.dialog('close');
 			});
 
-			dialog.find('.btn.alert_button').on('click', function() {
+			dialog.find('.btn.alert_button').click(function() {
 				dialog.dialog('close');
 			});
 
@@ -676,7 +676,7 @@ define(function(require) {
 
 			dialog.find('.json')
 				.css('min-width', 0)
-				.on('click', function(event) {
+				.click(function(event) {
 					event.preventDefault();
 					dialog.find('.json_error').toggle();
 				});
@@ -916,7 +916,7 @@ define(function(require) {
 			$dialogBody.dialog('option', 'position', dialogPosition);
 
 			// Set event handlers
-			$('input', content).on('keypress', function(e) {
+			$('input', content).keypress(function(e) {
 				if (e.keyCode === 13) {
 					e.preventDefault();
 					return false;
@@ -1348,12 +1348,12 @@ define(function(require) {
 
 			// Adding advanced custom rules
 			$.validator.addMethod('greaterDate', function(value, element, param) {
-			var target = _.isString(param) ? $(param) : param;
-			if (this.settings.onfocusout) {
-				target.off('.validate-greaterDate').on('blur.validate-greaterDate', function() {
-					$(element).valid();
-				});
-			}
+				var target = _.isString(param) ? $(param) : param;
+				if (this.settings.onfocusout) {
+					target.unbind('.validate-greaterDate').bind('blur.validate-greaterDate', function() {
+						$(element).valid();
+					});
+				}
 
 				return parseInt(monster.util.timeToSeconds(value)) > parseInt(monster.util.timeToSeconds(target.val()));
 			}, localization.customRules.greaterDate);
@@ -1874,7 +1874,7 @@ define(function(require) {
 					})
 					.keydown('esc', function() {
 						this.value = '';
-						$(this).trigger('change');
+						$(this).change();
 					});
 			} else {
 				wysiwygTemplate = $(monster.template(coreApp, 'wysiwyg-template', dataTemplate));
@@ -2520,7 +2520,7 @@ define(function(require) {
 				menus = thisArg.appFlags._layout.menus,
 				navbarTemplate = monster.template(monster.apps.core, 'monster-app-navbar', { menus: menus }),
 				subnavTemplate = monster.template(monster.apps.core, 'monster-app-subnav', { menus: menus }),
-				hasSubnav = ($(subnavTemplate).find('.app-subnav-wrapper').html() || '').trim(),
+				hasSubnav = $.trim($(subnavTemplate).find('.app-subnav-wrapper').html()),
 				initNavbar = function initNavbar() {
 					appHeader
 						.find('.app-navbar')
@@ -3116,7 +3116,7 @@ define(function(require) {
 
 			template.find('.dialbox').on('keydown', function(e) {
 				if (e.keyCode === 13) {
-					template.find('.dialpad-action-button').trigger('click');
+					template.find('.dialpad-action-button').click();
 				}
 			});
 

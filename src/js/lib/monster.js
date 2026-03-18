@@ -1,6 +1,5 @@
 define(function(require) {
 	var $ = require('jquery'),
-		jQueryMigrate = require('jquery-migrate'),
 		_ = require('lodash'),
 		async = require('async'),
 		card = require('card'),
@@ -145,7 +144,7 @@ define(function(require) {
 						monster.pub('monster.requestEnd');
 
 						if ('response' in error && error.response) {
-							parsedError = JSON.parse(error.response);
+							parsedError = $.parseJSON(error.response);
 						}
 
 						// If we have a 401 after being logged in, it means our session expired
@@ -341,7 +340,7 @@ define(function(require) {
 			isParsable = isParsable && error.responseText !== '';
 
 			if (isParsable) {
-				parsedError = JSON.parse(error.responseText);
+				parsedError = $.parseJSON(error.responseText);
 			}
 
 			var errorsI18n = monster.apps.core.i18n.active().errors,
@@ -404,11 +403,11 @@ define(function(require) {
 				status: error.status,
 				message: errorMessage,
 				requestId: requestId || '',
-				response: isParsable ? JSON.stringify(JSON.parse(error.responseText), null, 4) : JSON.stringify(error, null, 4),
+				response: isParsable ? JSON.stringify($.parseJSON(error.responseText), null, 4) : JSON.stringify(error, null, 4),
 				url: url || '',
 				verb: verb || '',
 				customTitle: customTitle,
-				jsonResponse: isParsable ? JSON.parse(error.responseText) : error
+				jsonResponse: isParsable ? $.parseJSON(error.responseText) : error
 			};
 		},
 
@@ -747,7 +746,7 @@ define(function(require) {
 		var parsedError = error;
 
 		if (_.has(error, 'responseText') && error.responseText) {
-			parsedError = JSON.parse(error.responseText);
+			parsedError = $.parseJSON(error.responseText);
 		}
 
 		// Prevent the execution of the custom error callback, as it is a

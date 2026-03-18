@@ -751,13 +751,13 @@ define(function(require) {
 					areaCodes.length > 1 ? areaCodesDiv.slideDown() : areaCodesDiv.slideUp();
 					event.stopPropagation();
 				}
-		});
+			});
 
-		// Activating the 'change' action on the sequential number checkbox
-		container.find('#seq_num_checkbox').on('change', function() {
-			var seqNumInputSpan = container.find('#seq_num_input_span'),
-				searchButton = container.find('#search_numbers_button');
-			if (this.checked) {
+			// Activating the 'change' action on the sequential number checkbox
+			container.find('#seq_num_checkbox').change(function() {
+				var seqNumInputSpan = container.find('#seq_num_input_span'),
+					searchButton = container.find('#search_numbers_button');
+				if (this.checked) {
 					seqNumInputSpan.slideDown();
 					searchButton.animate({
 						marginTop: '46px'
@@ -926,13 +926,13 @@ define(function(require) {
 					container.find('#search_top_div').slideUp(function() {
 						searchResultDiv.slideDown();
 					});
-			}
-		});
+				}
+			});
 
-		container.find('#back_to_search').on('click', function(ev) {
-			ev.preventDefault();
+			container.find('#back_to_search').click(function(ev) {
+				ev.preventDefault();
 
-			searchResultDiv.find('.result-content-div .left-div').scrollTop(0);
+				searchResultDiv.find('.result-content-div .left-div').scrollTop(0);
 				searchResultDiv.slideUp(function() {
 					container.find('#search_top_div').slideDown();
 				});
